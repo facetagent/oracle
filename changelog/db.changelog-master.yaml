@@ -42,34 +42,18 @@ databaseChangeLog:
       id: 004-insert-customer-data
       author: jean.daher
       changes:
-        - insert:
+        - loadData:
             tableName: CUSTOMER
+            file: data/customer.csv
+            relativeToChangelogFile: true
+            separator: ","
             columns:
               - column:
                   name: NAME
-                  value: Alice Dupont
+                  type: STRING
               - column:
                   name: EMAIL
-                  value: alice.dupont@example.com
-        - insert:
-            tableName: CUSTOMER
-            columns:
-              - column:
-                  name: NAME
-                  value: Bruno Martin
-              - column:
-                  name: EMAIL
-                  value: bruno.martin@example.com
-        - insert:
-            tableName: CUSTOMER
-            columns:
-              - column:
-                  name: NAME
-                  value: Claire Bernard
-              - column:
-                  name: EMAIL
-                  value: claire.bernard@example.com
+                  type: STRING
       rollback:
-        - delete:
-            tableName: CUSTOMER
-            where: "EMAIL IN ('alice.dupont@example.com', 'bruno.martin@example.com', 'claire.bernard@example.com')"
+        - sql:
+            sql: DELETE FROM CUSTOMER WHERE EMAIL IN ('alice.dupont@example.com', 'bruno.martin@example.com', 'claire.bernard@example.com')
