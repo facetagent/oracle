@@ -1,0 +1,14 @@
+# Liquibase
+liquibase.log
+*.liquibase.log
+
+# Local secrets / connection overrides (never commit credentials)
+liquibase.local.properties
+*.local.properties
+
+# Oracle JDBC driver / local libs
+lib/*.jar
+
+# OS
+.DS_Store
+Thumbs.db
