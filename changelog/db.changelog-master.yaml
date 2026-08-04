@@ -1,0 +1,75 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 001-create-table-customer
+      author: jean.daher
+      changes:
+        - sqlFile:
+            path: ../src/table/customer.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - dropTable:
+            tableName: CUSTOMER
+
+  - changeSet:
+      id: 002-create-package-pkg-customer-spec
+      author: jean.daher
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ../src/packages/pkg_customer.pks
+            relativeToChangelogFile: true
+            splitStatements: false
+            endDelimiter: /
+
+  - changeSet:
+      id: 003-create-package-pkg-customer-body
+      author: jean.daher
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ../src/packages/pkg_customer.pkb
+            relativeToChangelogFile: true
+            splitStatements: false
+            endDelimiter: /
+      rollback:
+        - sql:
+            sql: DROP PACKAGE pkg_customer;
+
+  - changeSet:
+      id: 004-insert-customer-data
+      author: jean.daher
+      changes:
+        - insert:
+            tableName: CUSTOMER
+            columns:
+              - column:
+                  name: NAME
+                  value: Alice Dupont
+              - column:
+                  name: EMAIL
+                  value: alice.dupont@example.com
+        - insert:
+            tableName: CUSTOMER
+            columns:
+              - column:
+                  name: NAME
+                  value: Bruno Martin
+              - column:
+                  name: EMAIL
+                  value: bruno.martin@example.com
+        - insert:
+            tableName: CUSTOMER
+            columns:
+              - column:
+                  name: NAME
+                  value: Claire Bernard
+              - column:
+                  name: EMAIL
+                  value: claire.bernard@example.com
+      rollback:
+        - delete:
+            tableName: CUSTOMER
+            where: "EMAIL IN ('alice.dupont@example.com', 'bruno.martin@example.com', 'claire.bernard@example.com')"
