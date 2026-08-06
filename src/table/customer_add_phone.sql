@@ -1,0 +1,1 @@
+ALTER TABLE customer ADD phone VARCHAR2(20);
