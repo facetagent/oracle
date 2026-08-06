@@ -57,3 +57,16 @@ databaseChangeLog:
       rollback:
         - sql:
             sql: DELETE FROM CUSTOMER WHERE EMAIL IN ('alice.dupont@example.com', 'bruno.martin@example.com', 'claire.bernard@example.com')
+
+  - changeSet:
+      id: 005-add-column-customer-phone
+      author: jean.daher
+      changes:
+        - sqlFile:
+            path: ../src/table/customer_add_phone.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+      rollback:
+        - dropColumn:
+            tableName: CUSTOMER
+            columnName: PHONE
