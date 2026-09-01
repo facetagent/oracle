@@ -1,0 +1,108 @@
+page 11 (
+    name: Customer Grid - Phone
+    alias: CUSTOMER-LIST-PHONE
+    title: Customer Grid
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+
+    region customer-grid-phone (
+        name: Customers (Phone View)
+        type: interactiveGrid
+        source {
+            location: localDatabase
+            type: tableView
+            tableName: CUSTOMER
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        edit {
+            enabled: true
+            allowedOperations: [
+                add
+                update
+                delete
+            ]
+        }
+
+        savedReport primary-report (
+            identification {
+                visibility: primary
+                name: Primary
+            }
+            view {
+                default: grid
+            }
+        )
+
+        column CUSTOMER_ID (
+            identification {
+                type: hidden
+            }
+            heading {
+                heading: Customer Id
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                databaseColumn: CUSTOMER_ID
+                dataType: number
+                primaryKey: true
+            }
+        )
+        column NAME (
+            identification {
+                type: textField
+            }
+            heading {
+                heading: Name
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                databaseColumn: NAME
+                dataType: varchar2
+            }
+        )
+        column PHONE (
+            identification {
+                type: textField
+            }
+            heading {
+                heading: Phone
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                databaseColumn: PHONE
+                dataType: varchar2
+            }
+        )
+    )
+
+    button view-email-list (
+        identification {
+            buttonName: VIEW_EMAIL_LIST
+            label: View Email List
+        }
+        layout {
+            sequence: 10
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 10
+            }
+        }
+    )
+)

@@ -1,0 +1,157 @@
+page 11 (
+    name: Customer List - Phone
+    alias: CUSTOMER-LIST-PHONE
+    title: Customer List
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+
+    region customer-list-phone (
+        name: Customers (Phone View)
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select customer_id,
+                       name,
+                       phone,
+                       '[Edit](f?p=&APP_ID.:20:&SESSION.::&DEBUG.::P20_CUSTOMER_ID:' || customer_id || ')' as edit_link,
+                       '[View](f?p=&APP_ID.:20:&SESSION.::&DEBUG.::P20_CUSTOMER_ID,P20_MODE:' || customer_id || ',VIEW)' as view_link
+                from   customer
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        advanced {
+            savedReportMappingIdentifier: 2409103916078120
+        }
+
+        column CUSTOMER_ID (
+            type: hidden
+            heading {
+                heading: Customer Id
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column EDIT_LINK (
+            type: richText
+            heading {
+                heading: Edit
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column NAME (
+            type: plainText
+            heading {
+                heading: Name
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column PHONE (
+            type: plainText
+            heading {
+                heading: Phone
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column VIEW_LINK (
+            type: richText
+            heading {
+                heading: View
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+    )
+
+    button new-customer (
+        buttonName: NEW_CUSTOMER
+        label: New Customer
+        layout {
+            sequence: 20
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 20
+            }
+        }
+    )
+
+    button view-email-list (
+        buttonName: VIEW_EMAIL_LIST
+        label: View Email List
+        layout {
+            sequence: 10
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 10
+            }
+        }
+    )
+
+)
+

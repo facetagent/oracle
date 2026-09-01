@@ -1,0 +1,142 @@
+page 11 (
+    name: Customer List - Phone
+    alias: CUSTOMER-LIST-PHONE
+    title: Customer List
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+
+    region customer-list-phone (
+        name: Customers (Phone View)
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select customer_id,
+                       name,
+                       phone,
+                       '[Edit](f?p=&APP_ID.:20:&SESSION.::&DEBUG.:20:P20_CUSTOMER_ID:' || customer_id || ')' as edit_link,
+                       '[View](f?p=&APP_ID.:20:&SESSION.::&DEBUG.:20:P20_CUSTOMER_ID,P20_MODE:' || customer_id || ',VIEW)' as view_link
+                from   customer
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+
+        column CUSTOMER_ID (
+            identification {
+                type: hidden
+            }
+            heading {
+                heading: Customer Id
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+        )
+        column NAME (
+            identification {
+                type: plainText
+            }
+            heading {
+                heading: Name
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+        )
+        column PHONE (
+            identification {
+                type: plainText
+            }
+            heading {
+                heading: Phone
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+        )
+        column EDIT_LINK (
+            identification {
+                type: richText
+            }
+            heading {
+                heading: Edit
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+        )
+        column VIEW_LINK (
+            identification {
+                type: richText
+            }
+            heading {
+                heading: View
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+        )
+    )
+
+    button view-email-list (
+        identification {
+            buttonName: VIEW_EMAIL_LIST
+            label: View Email List
+        }
+        layout {
+            sequence: 10
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 10
+            }
+        }
+    )
+
+    button new-customer (
+        identification {
+            buttonName: NEW_CUSTOMER
+            label: New Customer
+        }
+        layout {
+            sequence: 20
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 20
+            }
+        }
+    )
+)
