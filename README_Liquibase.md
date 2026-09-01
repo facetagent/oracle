@@ -1,4 +1,4 @@
-# Liquibase Executive Documentation for Oracle & APEX Environments
+# Liquibase Executive for Oracle & APEX Environments
 
 ## 1. Overview
 Liquibase is a database change‑management tool that enables versioned, automated, and repeatable schema evolution.
